@@ -63,14 +63,14 @@ Most commercial loops only cover either 20-10m or 80-30m. It turns out, this is 
 of the length of the loop. If you make a 1m loop, you get the former range, and if you double the 
 loop around with twice the length but the same diameter, you get the latter range.
 
-![3D Field](https://raw.githubusercontent/zortness/mag_loop_controller/main/images/double_mag_loop_3d_fields.png)
+![3D Field](images/double_mag_loop_3d_fields.png)
 
-![Design](https://raw.githubusercontent/zortness/mag_loop_controller/main/images/double_mag_loop_design.png)
+![Design](images/double_mag_loop_design.png)
 
-![Vacuum Caps](https://raw.githubusercontent/zortness/mag_loop_controller/main/images/vacuum_caps.jpg)
+![Vacuum Caps](images/vacuum_caps.jpg)
 
-![Controller and Remote](https://raw.githubusercontent/zortness/mag_loop_controller/main/images/mag_loop_control.jpg)
+![Controller and Remote](images/mag_loop_control.jpg)
 
-![Test Jig](https://raw.githubusercontent/zortness/mag_loop_controller/main/images/mag_loop_test_jig.jpg)
+![Test Jig](images/mag_loop_test_jig.jpg)
 
-![Deployed](https://raw.githubusercontent/zortness/mag_loop_controller/main/images/mag_loop_yard.jpg)
+![Deployed](images/mag_loop_yard.jpg)
