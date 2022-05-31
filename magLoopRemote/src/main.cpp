@@ -4,13 +4,16 @@
 #include <ESPmDNS.h>
 #include <HTTPClient.h>
 #include <cppQueue.h>
-
+#include "wifi_info.h"
 
 const char* hostname = "magloopremote";
-const char* ssid = "SSID";
-const char* password = "PASSWORD";
 
-const char * controllerHost = "magloopcontroller";
+const char* hostOptions[] = {"magloopcontroller20", "magloopcontroller40"};
+int lastSelectedHostOption = 0;
+int hostOptionSize = 2;
+const char * controllerHost = nullptr;
+bool appSelectHostChanged = true;
+
 //const char * controllerUrl = "http://magloopcontroller.local:80/";
 const char * rotateCmd = ":80/rotate?deg=";
 
@@ -169,6 +172,63 @@ static void appMagLoop() {
     }
 }
 
+static void appSelectHost() {
+    if (M5.BtnA.pressedFor(100)) {
+        // up
+        if (lastSelectedHostOption > 0) {
+            lastSelectedHostOption--;
+            appSelectHostChanged = true;
+        }
+    }
+    if (M5.BtnC.pressedFor(100)) {
+        // down
+        if (lastSelectedHostOption < (hostOptionSize-1)) {
+            lastSelectedHostOption++;
+            appSelectHostChanged = true;
+        }
+    }
+    if (M5.BtnB.pressedFor(100)) {
+        // select
+        controllerHost = hostOptions[lastSelectedHostOption];
+        appSelectHostChanged = true;
+        return;
+    }
+
+    if (!appSelectHostChanged) {
+        return;
+    }
+
+    M5.Lcd.clear(TFT_BLACK);
+    M5.Lcd.setTextColor(TFT_WHITE);
+
+    M5.Lcd.fillRoundRect(0,0,M5.Lcd.width(),28,3,TFT_NAVY);
+    M5.Lcd.fillRoundRect(31,M5.Lcd.height()-28,60,28,3,TFT_NAVY);
+    M5.Lcd.fillRoundRect(126,M5.Lcd.height()-28,60,28,3,TFT_NAVY);
+    M5.Lcd.fillRoundRect(221,M5.Lcd.height()-28,60,28,3,TFT_NAVY);
+
+    M5.Lcd.drawCentreString("Select Host",M5.Lcd.width()/2,6,2);
+
+    // loop through options
+    // highlight selected option
+    int height = 30;
+    int i = 0;
+    for (i = 0; i < hostOptionSize; i++) {
+        M5.Lcd.setTextColor(TFT_WHITE);
+        if (i == lastSelectedHostOption) {
+            M5.Lcd.setTextColor(TFT_ORANGE);
+        }
+        M5.Lcd.drawString(hostOptions[i], 5, height, 2);
+        M5.Lcd.setTextColor(TFT_WHITE);
+        height += 22;
+    }
+
+    M5.Lcd.drawCentreString("<",31+30,M5.Lcd.height()-28+6,2);
+    M5.Lcd.drawCentreString("SELECT",126+30,M5.Lcd.height()-28+6,2);
+    M5.Lcd.drawCentreString(">",221+30,M5.Lcd.height()-28+6,2);
+
+    appSelectHostChanged = false;
+}
+
 
 static void appSleep(){
     if (WiFi.isConnected()) {
@@ -191,7 +251,10 @@ void loop() {
         Serial.println("Going to sleep");
         appSleep();
     }
-    //drawMenu();
-    appMagLoop();
+    if (controllerHost == nullptr) {
+        appSelectHost();
+    } else {
+        appMagLoop();
+    }
 }
 

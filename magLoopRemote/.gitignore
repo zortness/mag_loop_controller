@@ -3,3 +3,5 @@ CMakeLists.txt
 CMakeListsPrivate.txt
 cmake-build-*/ 
 .idea
+
+src/wifi_info.h

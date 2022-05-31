@@ -3,12 +3,11 @@
 #include <ESPmDNS.h>
 #include <ESPAsyncWebServer.h>
 #include "A4988.h"
+#include "wifi_info.h"
 
 AsyncWebServer server(80);
 
-const char* hostname = "magloopcontroller";
-const char* ssid = "SSID";
-const char* password = "PASSWORD";
+const char* hostname = "magloopcontroller20";
 
 const char* PARAM_MESSAGE = "message";
 
